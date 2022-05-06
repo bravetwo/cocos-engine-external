@@ -31,12 +31,6 @@ set_target_properties(uv PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES ${platform_spec_path}/include/uv
 )
 
-add_library(openxr SHARED IMPORTED GLOBAL)
-set_target_properties(openxr PROPERTIES
-  IMPORTED_LOCATION ${platform_spec_path}/libxr_loader.so
-  INTERFACE_INCLUDE_DIRECTORIES ${platform_spec_path}/include/openxr
-)
-
 add_library(webp STATIC IMPORTED GLOBAL)
 set_target_properties(webp PROPERTIES
   IMPORTED_LOCATION ${platform_spec_path}/libwebp.a
@@ -66,6 +60,26 @@ target_include_directories(android_platform PUBLIC
 # target_link_libraries(android_platform PUBLIC
 #   android log dl
 # )
+
+if(USE_XR)
+  if(BUILD_XR_NATIVE)
+    include(${CMAKE_CURRENT_LIST_DIR}/../../../../CCOpenXR/internal/CMakeLists.txt)
+  else()
+    add_library(xr STATIC IMPORTED GLOBAL)
+    set_target_properties(xr PROPERTIES
+      IMPORTED_LOCATION ${platform_spec_path}/xr/${XR_OEM_FOLDER}/libxr.a
+      INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/../sources/xr
+    )
+
+    target_link_libraries(xr INTERFACE
+      ${XR_EXTERNAL_LIBS}
+    )
+  endif()
+
+  list(APPEND CC_EXTERNAL_LIBS
+      xr
+  )
+endif()
 
 set(se_libs_name)
 

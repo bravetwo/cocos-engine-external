@@ -76,6 +76,9 @@ if(ANDROID OR OHOS)
 
   include(${CMAKE_CURRENT_LIST_DIR}/pvmp3dec/CMakeLists.txt)
   include(${CMAKE_CURRENT_LIST_DIR}/tremolo/CMakeLists.txt)
+  if(USE_XR)
+      include(${CMAKE_CURRENT_LIST_DIR}/xr/CMakeLists.txt)
+  endif()
 
   list(APPEND CC_EXTERNAL_LIBS
     pvmp3dec
