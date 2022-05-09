@@ -23,7 +23,8 @@
  THE SOFTWARE.
 ****************************************************************************/
 
-#pragma once
+#ifndef H_XR_H
+#define H_XR_H
 
 #include <functional>
 #include <vector>
@@ -266,3 +267,4 @@ public:
 
 } // namespace cc
 } // namespace xr
+#endif//H_XR_H
