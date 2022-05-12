@@ -267,4 +267,5 @@ public:
 
 } // namespace cc
 } // namespace xr
-#endif//H_XR_H
+
+#endif //H_XR_H
