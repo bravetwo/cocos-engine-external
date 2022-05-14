@@ -198,9 +198,9 @@ struct HandleEvent {
 
 typedef std::function<void (const xr::HandleEvent &handleEvent)> XrEventsCallback;
 
-class XrEntrance {
+class XrEntry {
 public:
-    static XrEntrance* getInstance();
+    static XrEntry* getInstance();
 
     virtual void createXrInstance(const char* graphicsName, void* javaVM, void* activity) = 0;
 
@@ -256,9 +256,9 @@ public:
 
     virtual std::vector<float> GetFov(uint32_t index) = 0;
 
-    virtual void ByBeforeRenderFrame(int i) = 0;
+    virtual void BeforeRenderFrame(int i) = 0;
 
-    virtual void ByAfterRenderFrame(int i) = 0;
+    virtual void AfterRenderFrame(int i) = 0;
 
     virtual void EndRenderFrame() = 0;
 
