@@ -134,6 +134,17 @@ else()
   set(PhysXSDK)
 endif()
 
+if(USE_AR_MODULE)
+  set(CocosAR libCocosAR)
+  add_library(libCocosAR STATIC IMPORTED GLOBAL)
+  set_target_properties(libCocosAR PROPERTIES
+    IMPORTED_LOCATION ${platform_spec_path}/ar/libCocosARAndroid.a
+    INTERFACE_INCLUDE_DIRECTORIES ${platform_spec_path}/include/ar
+  )
+else()
+  set(CocosAR)
+endif()
+
 list(APPEND CC_EXTERNAL_LIBS
     freetype
     jpeg
@@ -144,6 +155,7 @@ list(APPEND CC_EXTERNAL_LIBS
     ${glslang_libs_name}
     ${tbb_libs_name}
     ${PhysXSDK}
+    ${CocosAR}
 )
 
 set(ZLIB z)
