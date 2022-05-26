@@ -267,6 +267,12 @@ public:
     virtual void EndRenderFrame() = 0;
 
     virtual uint32_t GetSwapchainImageIndexsByHandle(void* handle) = 0;
+
+    virtual int getMultisamplesRTT() const = 0;
+
+    virtual void setMultisamplesRTT(int num) = 0;
+
+    virtual void setRenderingScale(float scale) = 0;
 };
 
 } // namespace cc
