@@ -91,6 +91,7 @@ struct HandleEvent {
     enum class Type {
         VIEW_POSE_ACTIVE_LEFT,
         HAND_POSE_ACTIVE_LEFT,
+        AIM_POSE_ACTIVE_LEFT,
         TRIGGER_START_LEFT,
         TRIGGER_END_LEFT,
         TRIGGER_DOWN_LEFT,
@@ -109,6 +110,7 @@ struct HandleEvent {
         MENU_UP,
         VIEW_POSE_ACTIVE_RIGHT,
         HAND_POSE_ACTIVE_RIGHT,
+        AIM_POSE_ACTIVE_RIGHT,
         TRIGGER_START_RIGHT,
         TRIGGER_END_RIGHT,
         TRIGGER_DOWN_RIGHT,
@@ -143,6 +145,7 @@ struct HandleEvent {
     static const constexpr char *TypeNames[] = {
         "onViewPoseActiveLeft",
         "onHandPoseActiveLeft",
+        "onAimPoseActiveLeft",
         "onTriggerStartLeft",
         "onTriggerEndLeft",
         "onTriggerDownLeft",
@@ -161,6 +164,7 @@ struct HandleEvent {
         "onMenuUp",
         "onViewPoseActiveRight",
         "onHandPoseActiveRight",
+        "onAimPoseActiveRight",
         "onTriggerStartRight",
         "onTriggerEndRight",
         "onTriggerDownRight",
