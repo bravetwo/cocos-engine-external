@@ -3,7 +3,7 @@
 ################################# options ############################################
 # default fallback options
 cc_set_if_undefined(BUILD_XR_NATIVE               OFF)
-cc_set_if_undefined(XR_OEM_OCULUS                 OFF)
+cc_set_if_undefined(XR_OEM_META                   OFF)
 cc_set_if_undefined(XR_OEM_HUAWEIVR               OFF)
 cc_set_if_undefined(XR_OEM_PICO                   OFF)
 cc_set_if_undefined(XR_OEM_ROKID                  OFF)
@@ -31,7 +31,7 @@ endif()
 ################################# list all option values ##############################
 cc_inspect_values(
     BUILD_XR_NATIVE
-    XR_OEM_OCULUS
+    XR_OEM_META
     XR_OEM_HUAWEIVR
     XR_OEM_PICO
     XR_OEM_ROKID
@@ -51,7 +51,7 @@ cc_inspect_values(
 ################################# cc_xr_apply_definations ###################################
 function(cc_xr_apply_definations target)
     target_compile_definitions(${target} PUBLIC
-        $<IF:$<BOOL:${XR_OEM_OCULUS}>,XR_OEM_OCULUS=1,XR_OEM_OCULUS=0>
+        $<IF:$<BOOL:${XR_OEM_META}>,XR_OEM_META=1,XR_OEM_META=0>
         $<IF:$<BOOL:${XR_OEM_HUAWEIVR}>,XR_OEM_HUAWEIVR=1,XR_OEM_HUAWEIVR=0>
         $<IF:$<BOOL:${XR_OEM_PICO}>,XR_OEM_PICO=1,XR_OEM_PICO=0>
         $<IF:$<BOOL:${XR_OEM_ROKID}>,XR_OEM_ROKID=1,XR_OEM_ROKID=0>
@@ -81,8 +81,8 @@ list(APPEND XR_EXTERNAL_INCLUDES
 )
 
 set(XR_OEM_LOADER_NAME openxr_loader)
-if(XR_OEM_OCULUS)
-    set(XR_OEM_FOLDER oculus)
+if(XR_OEM_META)
+    set(XR_OEM_FOLDER meta)
 elseif(XR_OEM_HUAWEIVR)
     set(XR_OEM_FOLDER huaweivr)
     set(XR_OEM_LOADER_NAME xr_loader)
@@ -91,7 +91,7 @@ elseif(XR_OEM_PICO)
 elseif(XR_OEM_ROKID)
     set(XR_OEM_FOLDER rokid)
 else()
-    set(XR_OEM_FOLDER mobile)
+    set(XR_OEM_FOLDER monado)
 endif()
 
 add_library(openxr SHARED IMPORTED GLOBAL)
