@@ -216,6 +216,8 @@ public:
 
     virtual void initXrSession() = 0;
 
+    virtual void initXrSwapchains() = 0;
+
     virtual bool isCreatedXRinstance() = 0;
 
 #ifdef XR_USE_GRAPHICS_API_VULKAN
