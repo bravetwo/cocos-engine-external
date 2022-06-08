@@ -39,6 +39,10 @@ struct CocosXrSwapchain {
     uint32_t height;
 };
 
+#define GraphicsApiOpenglES "OpenGLES"
+#define GraphicsApiVulkan_1_0 "Vulkan1"
+#define GraphicsApiVulkan_1_1 "Vulkan2"
+
 namespace cc{
 namespace xr{
 
@@ -201,12 +205,15 @@ struct HandleEvent {
 };
 
 typedef std::function<void (const xr::HandleEvent &handleEvent)> XrEventsCallback;
+using PFNGLES3WLOADPROC = void *(*)(const char *);
 
 class XrEntry {
 public:
     static XrEntry* getInstance();
 
-    virtual void createXrInstance(const char* graphicsName, void* javaVM, void* activity) = 0;
+    virtual void initPlatformData(void* javaVM, void* activity) = 0;
+
+    virtual void createXrInstance(const char* graphicsName, void* javaVM = nullptr, void* activity = nullptr) = 0;
 
     virtual void pauseXrInstance() = 0;
 
@@ -214,13 +221,13 @@ public:
 
     virtual void destroyXrInstance() = 0;
 
-    virtual void initXrSession() = 0;
-
     virtual void initXrSwapchains() = 0;
 
     virtual bool isCreatedXRinstance() = 0;
 
 #ifdef XR_USE_GRAPHICS_API_VULKAN
+    virtual uint32_t getXrVkApiVersion(uint32_t defaultApiVersion) = 0;
+
     virtual void initXrSession(VkInstance vkInstance, VkPhysicalDevice vkPhyDevice, VkDevice vkDevice, uint32_t familyIndex) = 0;
 
     virtual void GetSwapchainImages(std::vector<VkImage> &vkImages, void *windowHandle, uint32_t &imageCount) = 0;
@@ -233,7 +240,9 @@ public:
 #endif
 
 #ifdef XR_USE_GRAPHICS_API_OPENGL_ES
-    virtual void SetOpenGLESConfig(void *eglDisplay, void *eglConfig, void *eglDefaultContext) = 0;
+    virtual void initXrSession(PFNGLES3WLOADPROC gles3wLoadFuncProc = nullptr, void *eglDisplay = nullptr, void *eglConfig = nullptr, void *eglDefaultContext = nullptr) = 0;
+    virtual unsigned int getXRFrameBuffer() = 0;
+    virtual void attachXRFramebufferTexture2D(void* windowHandle) = 0;
 #endif
 
     virtual const std::vector<CocosXrSwapchain> &GetCocosXrSwapchain() = 0;
@@ -275,6 +284,10 @@ public:
     virtual void setMultisamplesRTT(int num) = 0;
 
     virtual void setRenderingScale(float scale) = 0;
+
+    virtual bool platformLoopStart() = 0;
+
+    virtual bool platformLoopEnd() = 0;
 };
 
 } // namespace cc
