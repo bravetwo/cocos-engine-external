@@ -58,6 +58,8 @@ public:
     void setCameraTextureName(int id) override;
     void* getCameraTextureRef() override;
 
+    uint8_t* getCameraDepthBuffer() override;
+
     //void setPlaneFeatureEnable(bool isOn) override;
     int getAddedPlanesCount() override;
     int getRemovedPlanesCount() override;
@@ -108,6 +110,7 @@ protected:
     Matrix *_viewMatrix = new Matrix();
     Matrix *_projMatrix = new Matrix();
     TexCoords *_cameraTexCoords = new TexCoords();
+    uint8_t* _cameraDepthBuffer{nullptr};
     void onBeforeUpdate();
 
     //float* _addedPlanesInfo = new float[60];
