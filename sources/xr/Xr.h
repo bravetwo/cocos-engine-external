@@ -34,9 +34,10 @@
 #endif
 
 struct CocosXrSwapchain {
-    void* handle;
-    uint32_t width;
-    uint32_t height;
+    void *xrSwapchainHandle = nullptr;
+    void *ccSwapchainHandle = nullptr;
+    uint32_t width = 0;
+    uint32_t height = 0;
 };
 
 #define GraphicsApiOpenglES "OpenGLES"
@@ -213,13 +214,15 @@ public:
 
     virtual void initPlatformData(void* javaVM, void* activity) = 0;
 
-    virtual void createXrInstance(const char* graphicsName, void* javaVM = nullptr, void* activity = nullptr) = 0;
+    virtual void createXrInstance(const char* graphicsName) = 0;
 
     virtual void pauseXrInstance() = 0;
 
     virtual void resumeXrInstance() = 0;
 
     virtual void destroyXrInstance() = 0;
+
+    virtual int getXrViewCount() = 0;
 
     virtual void initXrSwapchains() = 0;
 
@@ -230,7 +233,7 @@ public:
 
     virtual void initXrSession(VkInstance vkInstance, VkPhysicalDevice vkPhyDevice, VkDevice vkDevice, uint32_t familyIndex) = 0;
 
-    virtual void GetSwapchainImages(std::vector<VkImage> &vkImages, void *windowHandle, uint32_t &imageCount) = 0;
+    virtual void getSwapchainImages(std::vector<VkImage> &vkImages, void *ccSwapchainHandle) = 0;
 
     virtual VkInstance XrVkCreateInstance(const VkInstanceCreateInfo &instInfo, const PFN_vkGetInstanceProcAddr &addr) = 0;
 
@@ -242,12 +245,10 @@ public:
 #ifdef XR_USE_GRAPHICS_API_OPENGL_ES
     virtual void initXrSession(PFNGLES3WLOADPROC gles3wLoadFuncProc = nullptr, void *eglDisplay = nullptr, void *eglConfig = nullptr, void *eglDefaultContext = nullptr) = 0;
     virtual unsigned int getXRFrameBuffer() = 0;
-    virtual void attachXRFramebufferTexture2D(void* windowHandle) = 0;
+    virtual void attachXRFramebufferTexture2D() = 0;
 #endif
 
-    virtual const std::vector<CocosXrSwapchain> &GetCocosXrSwapchain() = 0;
-
-    virtual const CocosXrSwapchain &GetXrSwapchain() = 0;
+    virtual std::vector<CocosXrSwapchain> &getCocosXrSwapchains() = 0;
 
     virtual bool IsSessionRunning() = 0;
 
@@ -277,7 +278,7 @@ public:
 
     virtual void EndRenderFrame() = 0;
 
-    virtual uint32_t GetSwapchainImageIndexsByHandle(void* handle) = 0;
+    virtual uint32_t getSwapchainImageIndex() = 0;
 
     virtual int getMultisamplesRTT() const = 0;
 
