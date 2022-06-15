@@ -226,7 +226,7 @@ public:
 
     virtual void initXrSwapchains() = 0;
 
-    virtual bool isCreatedXRinstance() = 0;
+    virtual bool isCreatedXrInstance() = 0;
 
 #ifdef XR_USE_GRAPHICS_API_VULKAN
     virtual uint32_t getXrVkApiVersion(uint32_t defaultApiVersion) = 0;
@@ -235,28 +235,26 @@ public:
 
     virtual void getSwapchainImages(std::vector<VkImage> &vkImages, void *ccSwapchainHandle) = 0;
 
-    virtual VkInstance XrVkCreateInstance(const VkInstanceCreateInfo &instInfo, const PFN_vkGetInstanceProcAddr &addr) = 0;
+    virtual VkInstance xrVkCreateInstance(const VkInstanceCreateInfo &instInfo, const PFN_vkGetInstanceProcAddr &addr) = 0;
 
-    virtual VkPhysicalDevice GetXrVkGraphicsDevice(const VkInstance &vkInstance) = 0;
+    virtual VkPhysicalDevice getXrVkGraphicsDevice(const VkInstance &vkInstance) = 0;
 
-    virtual VkResult XrVkCreateDevice(const VkDeviceCreateInfo *deviceInfo, const PFN_vkGetInstanceProcAddr &addr, const VkPhysicalDevice &vkPhysicalDevice, VkDevice* vkDevice) = 0;
+    virtual VkResult xrVkCreateDevice(const VkDeviceCreateInfo *deviceInfo, const PFN_vkGetInstanceProcAddr &addr, const VkPhysicalDevice &vkPhysicalDevice, VkDevice* vkDevice) = 0;
 #endif
 
 #ifdef XR_USE_GRAPHICS_API_OPENGL_ES
-    virtual void initXrSession(PFNGLES3WLOADPROC gles3wLoadFuncProc = nullptr, void *eglDisplay = nullptr, void *eglConfig = nullptr, void *eglDefaultContext = nullptr) = 0;
-    virtual unsigned int getXRFrameBuffer() = 0;
-    virtual void attachXRFramebufferTexture2D() = 0;
+    virtual void initXrSession(PFNGLES3WLOADPROC gles3wLoadFuncProc, void *eglDisplay, void *eglConfig, void *eglDefaultContext) = 0;
+
+    virtual unsigned int getXrFrameBuffer() = 0;
+
+    virtual void attachXrFramebufferTexture2D() = 0;
 #endif
 
     virtual std::vector<CocosXrSwapchain> &getCocosXrSwapchains() = 0;
 
-    virtual bool IsSessionRunning() = 0;
+    virtual bool isSessionRunning() = 0;
 
-    virtual bool PollEvents() = 0;
-
-    virtual void PollActions() = 0;
-
-    virtual void frameStart() = 0;
+    virtual bool frameStart() = 0;
 
     virtual void renderLoopStart(int i) = 0;
 
@@ -266,21 +264,9 @@ public:
 
     virtual void setEventsCallback(XrEventsCallback xrEventsCallback) = 0;
 
-    virtual bool BeginRenderFrame() = 0;
-
-    virtual std::vector<float> ComputeViewProjection(uint32_t index, float nearZ, float farZ, float scaleF) = 0;
-
-    virtual std::vector<float> GetFov(uint32_t index) = 0;
-
-    virtual void BeforeRenderFrame(int i) = 0;
-
-    virtual void AfterRenderFrame(int i) = 0;
-
-    virtual void EndRenderFrame() = 0;
+    virtual std::vector<float> computeViewProjection(uint32_t index, float nearZ, float farZ, float scaleF) = 0;
 
     virtual uint32_t getSwapchainImageIndex() = 0;
-
-    virtual int getMultisamplesRTT() const = 0;
 
     virtual void setMultisamplesRTT(int num) = 0;
 
