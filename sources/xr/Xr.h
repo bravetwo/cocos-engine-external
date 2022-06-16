@@ -26,6 +26,8 @@
 #ifndef H_XR_H
 #define H_XR_H
 
+#include "XRCommon.h"
+
 #include <functional>
 #include <vector>
 
@@ -33,180 +35,8 @@
 #include "vulkan/vulkan_core.h"
 #endif
 
-struct CocosXrSwapchain {
-    void *xrSwapchainHandle = nullptr;
-    void *ccSwapchainHandle = nullptr;
-    uint32_t width = 0;
-    uint32_t height = 0;
-};
-
-#define GraphicsApiOpenglES "OpenGLES"
-#define GraphicsApiVulkan_1_0 "Vulkan1"
-#define GraphicsApiVulkan_1_1 "Vulkan2"
-
 namespace cc{
 namespace xr{
-
-struct XrQuaternion{
-    float x               = 0.f;
-    float y               = 0.f;
-    float z               = 0.f;
-    float w               = 1.f;
-
-    XrQuaternion() {}
-
-    XrQuaternion(float xx, float yy, float zz, float ww)
-            : x(xx),
-              y(yy),
-              z(zz),
-              w(ww) {}
-
-    XrQuaternion(const XrQuaternion &copy) {
-        this->x = copy.x;
-        this->y = copy.y;
-        this->z = copy.z;
-        this->w = copy.w;
-    }
-};
-
-struct HandleInfo {
-    float x               = 0.f;
-    float y               = 0.f;
-    float z               = 0.f;
-    float value           = 0.f;
-    XrQuaternion quaternion;
-
-    HandleInfo() {}
-
-    HandleInfo(float x, float y)
-            : x(x),
-              y(y) {}
-
-    HandleInfo(float value)
-            : value(value) {}
-
-    HandleInfo(float x, float y, float z, const XrQuaternion &quaternion)
-            : x(x),
-              y(y),
-              z(z),
-              quaternion(quaternion) {}
-};
-
-struct HandleEvent {
-    enum class Type {
-        VIEW_POSE_ACTIVE_LEFT,
-        HAND_POSE_ACTIVE_LEFT,
-        AIM_POSE_ACTIVE_LEFT,
-        TRIGGER_START_LEFT,
-        TRIGGER_END_LEFT,
-        TRIGGER_DOWN_LEFT,
-        TRIGGER_UP_LEFT,
-        THUMBSTICK_MOVE_LEFT,
-        THUMBSTICK_MOVE_END_LEFT,
-        THUMBSTICK_DOWN_LEFT,
-        THUMBSTICK_UP_LEFT,
-        GRIP_START_LEFT,
-        GRIP_END_LEFT,
-        BUTTON_X_DOWN,
-        BUTTON_X_UP,
-        BUTTON_Y_DOWN,
-        BUTTON_Y_UP,
-        MENU_DOWN,
-        MENU_UP,
-        VIEW_POSE_ACTIVE_RIGHT,
-        HAND_POSE_ACTIVE_RIGHT,
-        AIM_POSE_ACTIVE_RIGHT,
-        TRIGGER_START_RIGHT,
-        TRIGGER_END_RIGHT,
-        TRIGGER_DOWN_RIGHT,
-        TRIGGER_UP_RIGHT,
-        THUMBSTICK_MOVE_RIGHT,
-        THUMBSTICK_MOVE_END_RIGHT,
-        THUMBSTICK_DOWN_RIGHT,
-        THUMBSTICK_UP_RIGHT,
-        GRIP_START_RIGHT,
-        GRIP_END_RIGHT,
-        BUTTON_A_DOWN,
-        BUTTON_A_UP,
-        BUTTON_B_DOWN,
-        BUTTON_B_UP,
-        HOME_DOWN,
-        HOME_UP,
-        BACK_DOWN,
-        BACK_UP,
-        START_DOWN,
-        START_UP,
-        DPAD_TOP_DOWN,
-        DPAD_TOP_UP,
-        DPAD_BOTTOM_DOWN,
-        DPAD_BOTTOM_UP,
-        DPAD_LEFT_DOWN,
-        DPAD_LEFT_UP,
-        DPAD_RIGHT_DOWN,
-        DPAD_RIGHT_UP,
-        UNKNOWN
-    };
-
-    static const constexpr char *TypeNames[] = {
-        "onViewPoseActiveLeft",
-        "onHandPoseActiveLeft",
-        "onAimPoseActiveLeft",
-        "onTriggerStartLeft",
-        "onTriggerEndLeft",
-        "onTriggerDownLeft",
-        "onTriggerUpLeft",
-        "onThumbstickMoveLeft",
-        "onThumbstickMoveEndLeft",
-        "onThumbstickDownLeft",
-        "onThumbstickUpLeft",
-        "onGripStartLeft",
-        "onGripEndLeft",
-        "onButtonXDown",
-        "onButtonXUp",
-        "onButtonYDown",
-        "onButtonYUp",
-        "onMenuDown",
-        "onMenuUp",
-        "onViewPoseActiveRight",
-        "onHandPoseActiveRight",
-        "onAimPoseActiveRight",
-        "onTriggerStartRight",
-        "onTriggerEndRight",
-        "onTriggerDownRight",
-        "onTriggerUpRight",
-        "onThumbstickMoveRight",
-        "onThumbstickMoveEndRight",
-        "onThumbstickDownRight",
-        "onThumbstickUpRight",
-        "onGripStartRight",
-        "onGripEndRight",
-        "onButtonADown",
-        "onButtonAUp",
-        "onButtonBDown",
-        "onButtonBUp",
-        "onHomeDown",
-        "onHomeUp",
-        "onBackDown",
-        "onBackUp",
-        "onStartDown",
-        "onStartUp",
-        "onDpadTopDown",
-        "onDpadTopUp",
-        "onDpadBottomDown",
-        "onDpadBottomUp",
-        "onDpadLeftDown",
-        "onDpadLeftUp",
-        "onDpadRightDown",
-        "onDpadRightUp",
-        "unknown"
-    };
-
-    HandleInfo handleInfo;
-    Type       type = Type::UNKNOWN;
-};
-
-typedef std::function<void (const xr::HandleEvent &handleEvent)> XrEventsCallback;
-using PFNGLES3WLOADPROC = void *(*)(const char *);
 
 class XrEntry {
 public:
@@ -250,7 +80,7 @@ public:
     virtual void attachXrFramebufferTexture2D() = 0;
 #endif
 
-    virtual std::vector<CocosXrSwapchain> &getCocosXrSwapchains() = 0;
+    virtual std::vector<XRSwapchain> &getCocosXrSwapchains() = 0;
 
     virtual bool isSessionRunning() = 0;
 
@@ -262,7 +92,7 @@ public:
 
     virtual void frameEnd() = 0;
 
-    virtual void setEventsCallback(XrEventsCallback xrEventsCallback) = 0;
+    virtual void setEventsCallback(XREventsCallback xrEventsCallback) = 0;
 
     virtual std::vector<float> computeViewProjection(uint32_t index, float nearZ, float farZ, float scaleF) = 0;
 
@@ -277,7 +107,7 @@ public:
     virtual bool platformLoopEnd() = 0;
 };
 
-} // namespace cc
 } // namespace xr
+} // namespace cc
 
 #endif //H_XR_H
