@@ -67,6 +67,7 @@ public:
 
     void enablePlane(bool enable) override;
     void setPlaneDetectionMode(int mode) override;
+    void setPlaneMaxTrackingNumber(int count) override;
 
     void updatePlanesInfo() override;
     float* getAddedPlanesInfo() override;
