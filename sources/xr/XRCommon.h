@@ -23,7 +23,8 @@
  THE SOFTWARE.
 ****************************************************************************/
 
-#pragma once
+#ifndef XR_COMMON_H_
+#define XR_COMMON_H_ 1
 #include <functional>
 
 namespace cc {
@@ -226,7 +227,7 @@ using PFNGLES3WLOADPROC = void *(*)(const char *);
 
 struct XRSwapchain {
     void *xrSwapchainHandle = nullptr;
-    void *ccSwapchainHandle = nullptr;
+    uint32_t ccSwapchainTypedID = 0;
     uint32_t width = 0;
     uint32_t height = 0;
     uint32_t glDrawFramebuffer = 0;
@@ -239,3 +240,4 @@ struct XRSwapchain {
 
 } // namespace xr
 } // namespace cc
+#endif //XR_COMMON_H_

@@ -63,7 +63,7 @@ public:
 
     virtual void initXrSession(VkInstance vkInstance, VkPhysicalDevice vkPhyDevice, VkDevice vkDevice, uint32_t familyIndex) = 0;
 
-    virtual void getSwapchainImages(std::vector<VkImage> &vkImages, void *ccSwapchainHandle) = 0;
+    virtual void getSwapchainImages(std::vector<VkImage> &vkImages,  uint32_t ccSwapchainTypedID) = 0;
 
     virtual VkInstance xrVkCreateInstance(const VkInstanceCreateInfo &instInfo, const PFN_vkGetInstanceProcAddr &addr) = 0;
 
