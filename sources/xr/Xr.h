@@ -105,6 +105,10 @@ public:
     virtual bool platformLoopStart() = 0;
 
     virtual bool platformLoopEnd() = 0;
+
+    virtual XRConfigValue getXRConfig(XRConfigKey key) = 0;
+
+    virtual void setXRConfig(XRConfigKey key, XRConfigValue value) = 0;
 };
 
 } // namespace xr
