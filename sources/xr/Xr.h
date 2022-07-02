@@ -26,25 +26,24 @@
 #ifndef H_XR_H
 #define H_XR_H
 
-#include "XRCommon.h"
-
 #include <functional>
 #include <vector>
+#include "XRCommon.h"
 
 #ifdef XR_USE_GRAPHICS_API_VULKAN
-#include "vulkan/vulkan_core.h"
+    #include "vulkan/vulkan_core.h"
 #endif
 
-namespace cc{
-namespace xr{
+namespace cc {
+namespace xr {
 
 class XrEntry {
 public:
-    static XrEntry* getInstance();
+    static XrEntry *getInstance();
 
-    virtual void initPlatformData(void* javaVM, void* activity) = 0;
+    virtual void initPlatformData(void *javaVM, void *activity) = 0;
 
-    virtual void createXrInstance(const char* graphicsName) = 0;
+    virtual void createXrInstance(const char *graphicsName) = 0;
 
     virtual void pauseXrInstance() = 0;
 
@@ -63,13 +62,13 @@ public:
 
     virtual void initXrSession(VkInstance vkInstance, VkPhysicalDevice vkPhyDevice, VkDevice vkDevice, uint32_t familyIndex) = 0;
 
-    virtual void getSwapchainImages(std::vector<VkImage> &vkImages,  uint32_t ccSwapchainTypedID) = 0;
+    virtual void getSwapchainImages(std::vector<VkImage> &vkImages, uint32_t ccSwapchainTypedID) = 0;
 
     virtual VkInstance xrVkCreateInstance(const VkInstanceCreateInfo &instInfo, const PFN_vkGetInstanceProcAddr &addr) = 0;
 
     virtual VkPhysicalDevice getXrVkGraphicsDevice(const VkInstance &vkInstance) = 0;
 
-    virtual VkResult xrVkCreateDevice(const VkDeviceCreateInfo *deviceInfo, const PFN_vkGetInstanceProcAddr &addr, const VkPhysicalDevice &vkPhysicalDevice, VkDevice* vkDevice) = 0;
+    virtual VkResult xrVkCreateDevice(const VkDeviceCreateInfo *deviceInfo, const PFN_vkGetInstanceProcAddr &addr, const VkPhysicalDevice &vkPhysicalDevice, VkDevice *vkDevice) = 0;
 #endif
 
 #ifdef XR_USE_GRAPHICS_API_OPENGL_ES
@@ -92,7 +91,13 @@ public:
 
     virtual void frameEnd() = 0;
 
-    virtual void setEventsCallback(XREventsCallback xrEventsCallback) = 0;
+    virtual bool isRenderAllowable() = 0;
+
+    virtual void setGamepadCallback(const cc::xr::XRControllerCallback &xrControllerCallback) = 0;
+
+    virtual void setHandleCallback(const cc::xr::XRControllerCallback &xrControllerCallback) = 0;
+
+    virtual void setHMDCallback(const cc::xr::XRControllerCallback &xrControllerCallback) = 0;
 
     virtual std::vector<float> computeViewProjection(uint32_t index, float nearZ, float farZ, float scaleF) = 0;
 
@@ -101,6 +106,10 @@ public:
     virtual void setMultisamplesRTT(int num) = 0;
 
     virtual void setRenderingScale(float scale) = 0;
+
+    virtual void setIPDOffset(float offset) = 0;
+
+    virtual std::vector<float> getHMDViewPosition(int index) = 0;
 
     virtual bool platformLoopStart() = 0;
 
@@ -114,4 +123,4 @@ public:
 } // namespace xr
 } // namespace cc
 
-#endif //H_XR_H
+#endif // H_XR_H

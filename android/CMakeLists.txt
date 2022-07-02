@@ -63,6 +63,8 @@ target_include_directories(android_platform PUBLIC
 
 if(USE_XR)
   if(BUILD_XR_NATIVE)
+    list(APPEND XR_EXTERNAL_SOURCES ${CMAKE_CURRENT_LIST_DIR}/../../cocos/platform/interfaces/modules/XRCommon.h)
+    list(APPEND XR_EXTERNAL_INCLUDES ${CMAKE_CURRENT_LIST_DIR}/../../cocos/platform/interfaces/modules)
     include(${CMAKE_CURRENT_LIST_DIR}/../../../../CCOpenXR/internal/CMakeLists.txt)
   else()
     add_library(xr STATIC IMPORTED GLOBAL)
