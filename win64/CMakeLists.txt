@@ -16,12 +16,14 @@ set_target_properties(dbgeng PROPERTIES
   IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/libs/dbgeng.dll
 )
 
+if (USE_DEBUG_RENDERER)
 add_library(freetype STATIC IMPORTED GLOBAL)
 
 set_target_properties(freetype PROPERTIES
   IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/libs/freetype.lib
   INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/include/freetype
 )
+endif()
 
 add_library(glew32 SHARED IMPORTED GLOBAL)
 
@@ -29,16 +31,6 @@ set_target_properties(glew32 PROPERTIES
   IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/libs/glew32.dll
   IMPORTED_IMPLIB ${CMAKE_CURRENT_LIST_DIR}/libs/glew32.lib
 )
-
-add_library(iconv SHARED IMPORTED GLOBAL)
-
-set_target_properties(iconv PROPERTIES
-  IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/libs/iconv-2.dll
-  IMPORTED_IMPLIB ${CMAKE_CURRENT_LIST_DIR}/libs/iconv.lib
-  IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/libs/charset-1.dll
-  IMPORTED_IMPLIB ${CMAKE_CURRENT_LIST_DIR}/libs/charset.lib
-)
-
 
 add_library(crypto STATIC IMPORTED GLOBAL)
 
@@ -235,10 +227,14 @@ else()
   set(PhysXSDK)
 endif()
 
+if (USE_DEBUG_RENDERER)
 list(APPEND CC_EXTERNAL_LIBS
     freetype
+)
+endif()
+
+list(APPEND CC_EXTERNAL_LIBS
     glew32
-    iconv
     crypto
     curl
     jpeg
