@@ -75,6 +75,10 @@ if(USE_XR)
       INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/../sources/xr
     )
 
+    set_property(TARGET xr APPEND PROPERTY
+      INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/../../cocos/platform/interfaces/modules
+    )
+
     target_link_libraries(xr INTERFACE
       ${XR_EXTERNAL_LIBS}
     )
