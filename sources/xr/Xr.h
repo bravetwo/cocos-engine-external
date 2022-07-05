@@ -109,7 +109,7 @@ public:
 
     virtual void setIPDOffset(float offset) = 0;
 
-    virtual std::vector<float> getHMDViewPosition(int index) = 0;
+    virtual std::vector<float> getHMDViewPosition(uint32_t index) = 0;
 
     virtual bool platformLoopStart() = 0;
 
