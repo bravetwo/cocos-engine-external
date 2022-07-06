@@ -40,6 +40,7 @@ namespace xr {
 class XrEntry {
 public:
     static XrEntry *getInstance();
+    static void destroyInstance();
 
     virtual void initPlatformData(void *javaVM, void *activity) = 0;
 
