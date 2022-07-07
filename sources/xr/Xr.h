@@ -119,6 +119,8 @@ public:
     virtual XRConfigValue getXRConfig(XRConfigKey key) = 0;
 
     virtual void setXRConfig(XRConfigKey key, XRConfigValue value) = 0;
+
+    virtual void waitFrame() = 0;
 };
 
 } // namespace xr
