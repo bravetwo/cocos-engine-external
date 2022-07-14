@@ -110,6 +110,8 @@ public:
 
     virtual void setIPDOffset(float offset) = 0;
 
+    virtual void setBaseSpaceType(int type) = 0;
+
     virtual std::vector<float> getHMDViewPosition(uint32_t index, int trackingType) = 0;
 
     virtual bool platformLoopStart() = 0;
