@@ -141,8 +141,17 @@ if(USE_AR_MODULE)
     IMPORTED_LOCATION ${platform_spec_path}/ar/libCocosARAndroid.a
     INTERFACE_INCLUDE_DIRECTORIES ${platform_spec_path}/include/ar
   )
+  if(USE_AR_NDK)
+    set(ARCore libARCore)
+    add_library(libARCore SHARED IMPORTED GLOBAL)
+    set_target_properties(libARCore PROPERTIES
+      IMPORTED_LOCATION ${platform_spec_path}/ar/libarcore_sdk_c.so
+      INTERFACE_INCLUDE_DIRECTORIES ${platform_spec_path}/include/ar
+    )
+  endif()
 else()
   set(CocosAR)
+  set(ARCore)
 endif()
 
 list(APPEND CC_EXTERNAL_LIBS
@@ -156,6 +165,7 @@ list(APPEND CC_EXTERNAL_LIBS
     ${tbb_libs_name}
     ${PhysXSDK}
     ${CocosAR}
+    ${ARCore}
 )
 
 set(ZLIB z)

@@ -26,6 +26,7 @@
 #pragma once
 
 #include "ar/IARAPI.h"
+//#include "base/CommonDefines.h"
 
 class _jobject;
 
@@ -105,11 +106,17 @@ public:
     float* getUpdatedObjectsInfo() override;
     float* getRemovedObjectsInfo() override;
 
+    void enableFaceTracking(bool enable) override;
+    float* getAddedFacesInfo() override;
+    float* getUpdatedFacesInfo() override;
+    float* getRemovedFacesInfo() override;
+    float* getFaceBlendShapesOf(int faceRef) override;
+
 protected:
     _jobject* _impl;
-    Pose *_cameraPose = new Pose();
-    Matrix *_viewMatrix = new Matrix();
-    Matrix *_projMatrix = new Matrix();
+    Pose* _cameraPose = new Pose();
+    Matrix* _viewMatrix = new Matrix();
+    Matrix* _projMatrix = new Matrix();
     TexCoords *_cameraTexCoords = new TexCoords();
     uint8_t* _cameraDepthBuffer{nullptr};
     void onBeforeUpdate();
@@ -138,6 +145,10 @@ protected:
     float* _addedObjsInfo{nullptr};
     float* _updatedObjsInfo{nullptr};
     float* _removedObjsInfo{nullptr};
+
+    float* _addedFacesInfo{nullptr};
+    float* _updatedFacesInfo{nullptr};
+    float* _removedFacesInfo{nullptr};
 };
 
 } // namespace ar
