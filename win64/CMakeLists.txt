@@ -16,12 +16,14 @@ set_target_properties(dbgeng PROPERTIES
   IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/libs/dbgeng.dll
 )
 
+if (USE_DEBUG_RENDERER)
 add_library(freetype STATIC IMPORTED GLOBAL)
 
 set_target_properties(freetype PROPERTIES
   IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/libs/freetype.lib
   INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/include/freetype
 )
+endif()
 
 add_library(glew32 SHARED IMPORTED GLOBAL)
 
@@ -29,16 +31,6 @@ set_target_properties(glew32 PROPERTIES
   IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/libs/glew32.dll
   IMPORTED_IMPLIB ${CMAKE_CURRENT_LIST_DIR}/libs/glew32.lib
 )
-
-add_library(iconv SHARED IMPORTED GLOBAL)
-
-set_target_properties(iconv PROPERTIES
-  IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/libs/iconv-2.dll
-  IMPORTED_IMPLIB ${CMAKE_CURRENT_LIST_DIR}/libs/iconv.lib
-  IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/libs/charset-1.dll
-  IMPORTED_IMPLIB ${CMAKE_CURRENT_LIST_DIR}/libs/charset.lib
-)
-
 
 add_library(crypto STATIC IMPORTED GLOBAL)
 
@@ -172,21 +164,27 @@ if(CC_EDITOR)
 elseif(USE_SE_V8)
     add_library(v8 SHARED IMPORTED GLOBAL)
     set_target_properties(v8 PROPERTIES
-      IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/libs/v8.dll
-      IMPORTED_IMPLIB ${CMAKE_CURRENT_LIST_DIR}/libs/v8.dll.lib
+      IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/libs/v8/release/v8.dll
+      IMPORTED_IMPLIB ${CMAKE_CURRENT_LIST_DIR}/libs/v8/release/v8.dll.lib
+      IMPORTED_LOCATION_DEBUG ${CMAKE_CURRENT_LIST_DIR}/libs/v8/debug/v8.dll
+      IMPORTED_IMPLIB_DEBUG ${CMAKE_CURRENT_LIST_DIR}/libs/v8/debug/v8.dll.lib
       INTERFACE_COMPILE_DEFINITIONS V8_COMPRESS_POINTERS
     )
 
     add_library(v8_libbase SHARED IMPORTED GLOBAL)
     set_target_properties(v8_libbase PROPERTIES
-      IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/libs/v8_libbase.dll
-      IMPORTED_IMPLIB ${CMAKE_CURRENT_LIST_DIR}/libs/v8_libbase.dll.lib
+      IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/libs/v8/release/v8_libbase.dll
+      IMPORTED_IMPLIB ${CMAKE_CURRENT_LIST_DIR}/libs/v8/release/v8_libbase.dll.lib
+      IMPORTED_LOCATION_DEBUG ${CMAKE_CURRENT_LIST_DIR}/libs/v8/debug/v8_libbase.dll
+      IMPORTED_IMPLIB_DEBUG ${CMAKE_CURRENT_LIST_DIR}/libs/v8/debug/v8_libbase.dll.lib
     )
 
     add_library(v8_libplatform SHARED IMPORTED GLOBAL)
     set_target_properties(v8_libplatform PROPERTIES
-      IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/libs/v8_libplatform.dll
-      IMPORTED_IMPLIB ${CMAKE_CURRENT_LIST_DIR}/libs/v8_libplatform.dll.lib
+      IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/libs/v8/release/v8_libplatform.dll
+      IMPORTED_IMPLIB ${CMAKE_CURRENT_LIST_DIR}/libs/v8/release/v8_libplatform.dll.lib
+      IMPORTED_LOCATION_DEBUG ${CMAKE_CURRENT_LIST_DIR}/libs/v8/debug/v8_libplatform.dll
+      IMPORTED_IMPLIB_DEBUG ${CMAKE_CURRENT_LIST_DIR}/libs/v8/debug/v8_libplatform.dll.lib
     )
 
     target_link_libraries(v8 INTERFACE v8_libbase v8_libplatform)
@@ -207,7 +205,7 @@ foreach(gl IN LISTS glslang_libs_name)
   add_library(${gl} STATIC IMPORTED GLOBAL)
   set_target_properties(${gl} PROPERTIES
     IMPORTED_LOCATION_DEBUG ${CMAKE_CURRENT_LIST_DIR}/libs/glslang/${gl}d.lib
-    IMPORTED_LOCATION_RELEASE ${CMAKE_CURRENT_LIST_DIR}/libs/glslang/${gl}.lib
+    IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/libs/glslang/${gl}.lib
   )
 endforeach()
 
@@ -228,17 +226,21 @@ if(USE_PHYSICS_PHYSX)
     add_library(${PX} STATIC IMPORTED GLOBAL)
     set_target_properties(${PX} PROPERTIES
       IMPORTED_LOCATION_DEBUG ${CMAKE_CURRENT_LIST_DIR}/libs/PhysX/debug/${PX}_static_64.lib
-      IMPORTED_LOCATION_RELEASE ${CMAKE_CURRENT_LIST_DIR}/libs/PhysX/release/${PX}_static_64.lib
+      IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/libs/PhysX/release/${PX}_static_64.lib
     )
   endforeach()
 else()
   set(PhysXSDK)
 endif()
 
+if (USE_DEBUG_RENDERER)
 list(APPEND CC_EXTERNAL_LIBS
     freetype
+)
+endif()
+
+list(APPEND CC_EXTERNAL_LIBS
     glew32
-    iconv
     crypto
     curl
     jpeg

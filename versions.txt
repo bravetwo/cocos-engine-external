@@ -46,11 +46,12 @@ freetype2
     win64: 2.10.0
 
 libz
-    mac: 1.2.11
-    win32: 1.2.11
+    mac: 1.2.12
+    win32: --
     ios: --
-    android: 1.2.11
-    win64: 1.2.11
+    android: 1.2.12
+    win64: 1.2.12
+    linux: 1.2.12
 
 spidermonkey
     mac: v52
@@ -106,9 +107,6 @@ PVRVFrame
 spirv_cross
     mac: 2021.1.15
     ios: 2021.1.15
-iconv
-    win32: 0x0109
-    win64: 0x0110
 
 glslang (Built using https://github.com/YunHsiao/glslang/tree/build)
     win32:      11.5.0 (commit: 1978c76)
@@ -116,7 +114,4 @@ glslang (Built using https://github.com/YunHsiao/glslang/tree/build)
     android:    11.5.0 (commit: 1978c76)
     mac:        11.5.0 (commit: 1978c76)
     ios:        11.5.0 (commit: 1978c76)
-
-MurmurHash2
-    all-platforms: (no version informantion): https://sites.google.com/site/murmurhash
     
