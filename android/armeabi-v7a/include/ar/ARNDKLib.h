@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2021 Xiamen Yaji Software Co., Ltd.
+ Copyright (c) 2022 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos.com
 
@@ -23,34 +23,30 @@
  THE SOFTWARE.
 ****************************************************************************/
 
-#pragma once
+#ifndef LIBCOCOSARANDROID_ARNDKLIB_H
+#define LIBCOCOSARANDROID_ARNDKLIB_H
 
 #include "ar/IARAPI.h"
-//#include "base/CommonDefines.h"
-
-class _jobject;
+#include <memory>
 
 namespace cc {
 namespace ar {
-/*
-using JniMethodInfo = struct JniMethodInfo_ {
-    JNIEnv *  env;
-    jclass    classID;
-    jmethodID methodID;
-};
-*/
-class ARAndroidLib : public IARAPI {
+
+class CocosARAndroidImpl;
+
+class ARNDKLib : public IARAPI {
 public:
-    ARAndroidLib();
-    ~ARAndroidLib() override;
+    ARNDKLib();
+    ~ARNDKLib() override;
     void config(int featureMask) override;
     int getSupportMask() override;
     void start() override;
+    void start(void *context) override;
     void resume() override;
+    void resume(void *context) override;
     void pause() override;
     void update() override;
     int getAPIState() override;
-    //void beforeUpdate() override;
 
     float* getCameraPose() override;
     float* getCameraViewMatrix() override;
@@ -58,22 +54,8 @@ public:
     float* getCameraTexCoords() override;
     void setCameraTextureName(int id) override;
     void* getCameraTextureRef() override;
-
     uint8_t* getCameraDepthBuffer() override;
 
-    //void setPlaneFeatureEnable(bool isOn) override;
-    int getAddedPlanesCount() override;
-    int getRemovedPlanesCount() override;
-    int getUpdatedPlanesCount() override;
-
-    void enablePlane(bool enable) override;
-    void setPlaneDetectionMode(int mode) override;
-    void setPlaneMaxTrackingNumber(int count) override;
-
-    //void updatePlanesInfo() override;
-    float* getAddedPlanesInfo() override;
-    int* getRemovedPlanesInfo() override;
-    float* getUpdatedPlanesInfo() override;
     int getInfoLength() override;
 
     int tryHitAttachAnchor(int planeIndex) override;
@@ -83,6 +65,16 @@ public:
     float* getRaycastPose() override;
     int getRaycastTrackableId() override;
     int getRaycastTrackableType() override;
+
+    void enablePlane(bool enable) override;
+    void setPlaneDetectionMode(int mode) override;
+    void setPlaneMaxTrackingNumber(int count) override;
+    float* getAddedPlanesInfo() override;
+    int* getRemovedPlanesInfo() override;
+    float* getUpdatedPlanesInfo() override;
+    int getAddedPlanesCount() override;
+    int getRemovedPlanesCount() override;
+    int getUpdatedPlanesCount() override;
 
     void enableSceneMesh(bool enable) override;
     float* getAddedSceneMesh() override;
@@ -111,46 +103,11 @@ public:
     float* getUpdatedFacesInfo() override;
     float* getRemovedFacesInfo() override;
     float* getFaceBlendShapesOf(int faceRef) override;
-
 protected:
-    _jobject* _impl;
-    Pose* _cameraPose = new Pose();
-    Matrix* _viewMatrix = new Matrix();
-    Matrix* _projMatrix = new Matrix();
-    TexCoords *_cameraTexCoords = new TexCoords();
-    uint8_t* _cameraDepthBuffer{nullptr};
-    void onBeforeUpdate();
-
-    //float* _addedPlanesInfo = new float[60];
-    float* _addedPlanesInfo = nullptr;
-    int* _removedPlanesInfo = nullptr;
-    //'float* _updatedPlanesInfo = new float[60];
-    float* _updatedPlanesInfo = nullptr;
-    int _infoLength = 0;
-
-    float* _hitPose = new float[7];
-    float* _anchorPose = new float[7];
-
-    float* _sceneMeshVertices{nullptr};
-    int* _sceneMeshIndices{nullptr};
-    float* _addedSceneMeshInfo{nullptr};
-    float* _updatedSceneMeshInfo{nullptr};
-    int* _removedSceneMeshRefs{nullptr};
-    int* _requiredSceneMeshRefs{nullptr};
-
-    float* _addedImagesInfo{nullptr};
-    float* _updatedImagesInfo{nullptr};
-    float* _removedImagesInfo{nullptr};
-
-    float* _addedObjsInfo{nullptr};
-    float* _updatedObjsInfo{nullptr};
-    float* _removedObjsInfo{nullptr};
-
-    float* _addedFacesInfo{nullptr};
-    float* _updatedFacesInfo{nullptr};
-    float* _removedFacesInfo{nullptr};
-    float* _faceBlendShapes{nullptr};
+    CocosARAndroidImpl* _impl;
 };
 
 } // namespace ar
 } // namespace cc
+
+#endif //LIBCOCOSARANDROID_ARNDKLIB_H

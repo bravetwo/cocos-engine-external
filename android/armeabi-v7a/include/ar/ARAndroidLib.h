@@ -50,7 +50,7 @@ public:
     void pause() override;
     void update() override;
     int getAPIState() override;
-    void beforeUpdate() override;
+    //void beforeUpdate() override;
 
     float* getCameraPose() override;
     float* getCameraViewMatrix() override;
@@ -70,7 +70,7 @@ public:
     void setPlaneDetectionMode(int mode) override;
     void setPlaneMaxTrackingNumber(int count) override;
 
-    void updatePlanesInfo() override;
+    //void updatePlanesInfo() override;
     float* getAddedPlanesInfo() override;
     int* getRemovedPlanesInfo() override;
     float* getUpdatedPlanesInfo() override;
@@ -149,6 +149,7 @@ protected:
     float* _addedFacesInfo{nullptr};
     float* _updatedFacesInfo{nullptr};
     float* _removedFacesInfo{nullptr};
+    float* _faceBlendShapes{nullptr};
 };
 
 } // namespace ar
