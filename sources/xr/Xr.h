@@ -82,6 +82,10 @@ public:
 
     virtual std::vector<XRSwapchain> &getCocosXrSwapchains() = 0;
 
+    virtual void updateXrSwapchainInfo(uint32_t eye, uint32_t typedID) = 0;
+
+    virtual const xr::XRSwapchain &acquireXrSwapchain(uint32_t gfxApi) = 0;
+
     virtual bool isSessionRunning() = 0;
 
     virtual bool frameStart() = 0;
@@ -123,6 +127,26 @@ public:
     virtual void setXRConfig(XRConfigKey key, XRConfigValue value) = 0;
 
     virtual void waitFrame() = 0;
+
+    virtual void setXRIntConfig(int key, int value) = 0;
+
+    virtual void setXRBoolConfig(int key, bool value) = 0;
+
+    virtual void setXRFloatConfig(int key, float value) = 0;
+
+    virtual void setXRStringConfig(int key, std::string value) = 0;
+
+    virtual void setXRPointerConfig(int key, void *value) = 0;
+
+    virtual int getXRIntConfig(int key) = 0;
+
+    virtual bool getXRBoolConfig(int key) = 0;
+
+    virtual float getXRFloatConfig(int key) = 0;
+
+    virtual std::string getXRStringConfig(int key) = 0;
+
+    virtual void *getXRPointerConfig(int key) = 0;
 };
 
 } // namespace xr
