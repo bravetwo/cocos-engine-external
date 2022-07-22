@@ -17,6 +17,6 @@
 #}
 
 
--keep class com.qualcomm.snapdragonvrservice {*;}
--keep class com.qualcomm.svrapi {*;}
--keep class com.qualcomm.sxrapi {*;}
+-keep class com.qualcomm.snapdragonvrservice.* {*;}
+-keep class com.qualcomm.svrapi.* {*;}
+-keep class com.qualcomm.sxrapi.* {*;}
