@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2021 Xiamen Yaji Software Co., Ltd.
+ Copyright (c) 2021-2022 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos.com
 
@@ -44,7 +44,7 @@ public:
     ARAndroidLib();
     ~ARAndroidLib() override;
     void config(int featureMask) override;
-    int getSupportMask() override;
+    uint32_t getSupportMask() override;
     void start() override;
     void resume() override;
     void pause() override;
@@ -72,7 +72,7 @@ public:
 
     //void updatePlanesInfo() override;
     float* getAddedPlanesInfo() override;
-    int* getRemovedPlanesInfo() override;
+    float* getRemovedPlanesInfo() override;
     float* getUpdatedPlanesInfo() override;
     int getInfoLength() override;
 
@@ -119,11 +119,11 @@ protected:
     Matrix* _projMatrix = new Matrix();
     TexCoords *_cameraTexCoords = new TexCoords();
     uint8_t* _cameraDepthBuffer{nullptr};
-    void onBeforeUpdate();
+    //void onBeforeUpdate();
 
     //float* _addedPlanesInfo = new float[60];
     float* _addedPlanesInfo = nullptr;
-    int* _removedPlanesInfo = nullptr;
+    float* _removedPlanesInfo = nullptr;
     //'float* _updatedPlanesInfo = new float[60];
     float* _updatedPlanesInfo = nullptr;
     int _infoLength = 0;

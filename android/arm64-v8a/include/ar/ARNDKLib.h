@@ -23,11 +23,11 @@
  THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef LIBCOCOSARANDROID_ARNDKLIB_H
-#define LIBCOCOSARANDROID_ARNDKLIB_H
+#pragma once
 
+//#include <memory>
 #include "ar/IARAPI.h"
-#include <memory>
+//#include "ar-base/CocosARFeature.h"
 
 namespace cc {
 namespace ar {
@@ -39,9 +39,10 @@ public:
     ARNDKLib();
     ~ARNDKLib() override;
     void config(int featureMask) override;
-    int getSupportMask() override;
+    uint32_t getSupportMask() override;
     void start() override;
     void start(void *context) override;
+    void start(void *env, void *context) override;
     void resume() override;
     void resume(void *context) override;
     void pause() override;
@@ -70,8 +71,8 @@ public:
     void setPlaneDetectionMode(int mode) override;
     void setPlaneMaxTrackingNumber(int count) override;
     float* getAddedPlanesInfo() override;
-    int* getRemovedPlanesInfo() override;
     float* getUpdatedPlanesInfo() override;
+    float* getRemovedPlanesInfo() override;
     int getAddedPlanesCount() override;
     int getRemovedPlanesCount() override;
     int getUpdatedPlanesCount() override;
@@ -109,5 +110,3 @@ protected:
 
 } // namespace ar
 } // namespace cc
-
-#endif //LIBCOCOSARANDROID_ARNDKLIB_H
