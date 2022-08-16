@@ -63,7 +63,7 @@ public:
 
     virtual void initXrSession(VkInstance vkInstance, VkPhysicalDevice vkPhyDevice, VkDevice vkDevice, uint32_t familyIndex) = 0;
 
-    virtual void getSwapchainImages(std::vector<VkImage> &vkImages, uint32_t ccSwapchainTypedID) = 0;
+    virtual void getSwapchainImages(std::vector<VkImage> &vkImages, uint32_t eye) = 0;
 
     virtual VkInstance xrVkCreateInstance(const VkInstanceCreateInfo &instInfo, const PFN_vkGetInstanceProcAddr &addr) = 0;
 
@@ -82,7 +82,7 @@ public:
 
     virtual std::vector<XRSwapchain> &getCocosXrSwapchains() = 0;
 
-    virtual void updateXrSwapchainInfo(uint32_t eye, uint32_t typedID) = 0;
+    virtual const XRSwapchain getCurrentXrSwapchain() = 0;
 
     virtual const xr::XRSwapchain &acquireXrSwapchain(uint32_t gfxApi) = 0;
 
@@ -90,9 +90,9 @@ public:
 
     virtual bool frameStart() = 0;
 
-    virtual void renderLoopStart(int i) = 0;
+    virtual void renderLoopStart(int eye) = 0;
 
-    virtual void renderLoopEnd(int i) = 0;
+    virtual void renderLoopEnd(int eye) = 0;
 
     virtual void frameEnd() = 0;
 
@@ -103,6 +103,8 @@ public:
     virtual void setHandleCallback(const cc::xr::XRControllerCallback &xrControllerCallback) = 0;
 
     virtual void setHMDCallback(const cc::xr::XRControllerCallback &xrControllerCallback) = 0;
+
+    virtual void setXRConfigCallback(const cc::xr::XRConfigChangeCallback &xrConfigChangeCallback) = 0;
 
     virtual std::vector<float> computeViewProjection(uint32_t index, float nearZ, float farZ, float scaleF) = 0;
 
