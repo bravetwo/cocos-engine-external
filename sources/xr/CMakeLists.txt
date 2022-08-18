@@ -7,6 +7,7 @@ cc_set_if_undefined(XR_OEM_META                   OFF)
 cc_set_if_undefined(XR_OEM_HUAWEIVR               OFF)
 cc_set_if_undefined(XR_OEM_PICO                   OFF)
 cc_set_if_undefined(XR_OEM_ROKID                  OFF)
+cc_set_if_undefined(XR_OEM_SEED                   ON)
 cc_set_if_undefined(XR_USE_GRAPHICS_API_OPENGL_ES ON)
 cc_set_if_undefined(XR_USE_GRAPHICS_API_VULKAN    ON)
 cc_set_if_undefined(XR_USE_GRAPHICS_API_OPENGL    OFF)
@@ -35,6 +36,7 @@ cc_inspect_values(
     XR_OEM_HUAWEIVR
     XR_OEM_PICO
     XR_OEM_ROKID
+    XR_OEM_SEED
     XR_USE_GRAPHICS_API_OPENGL_ES
     XR_USE_GRAPHICS_API_VULKAN
     XR_USE_GRAPHICS_API_OPENGL
@@ -55,6 +57,7 @@ function(cc_xr_apply_definations target)
         $<IF:$<BOOL:${XR_OEM_HUAWEIVR}>,XR_OEM_HUAWEIVR=1,XR_OEM_HUAWEIVR=0>
         $<IF:$<BOOL:${XR_OEM_PICO}>,XR_OEM_PICO=1,XR_OEM_PICO=0>
         $<IF:$<BOOL:${XR_OEM_ROKID}>,XR_OEM_ROKID=1,XR_OEM_ROKID=0>
+        $<IF:$<BOOL:${XR_OEM_SEED}>,XR_OEM_SEED=1,XR_OEM_SEED=0>
         $<$<BOOL:${XR_USE_GRAPHICS_API_OPENGL_ES}>:XR_USE_GRAPHICS_API_OPENGL_ES=1>
         $<$<BOOL:${XR_USE_GRAPHICS_API_VULKAN}>:XR_USE_GRAPHICS_API_VULKAN=1>
         $<$<BOOL:${XR_USE_GRAPHICS_API_OPENGL}>:XR_USE_GRAPHICS_API_OPENGL=1>
