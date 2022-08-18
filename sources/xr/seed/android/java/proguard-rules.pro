@@ -21,3 +21,8 @@
 -keep class com.qualcomm.**
 -keep interface com.qualcomm.** {*;}
 -dontwarn com.qualcomm.**
+
+-keep class com.seedxr.** {*;}
+-keep class com.seedxr.**
+-keep interface com.seedxr.** {*;}
+-dontwarn com.seedxr.**
