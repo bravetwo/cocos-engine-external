@@ -26,19 +26,12 @@
 #pragma once
 
 #include "ar/IARAPI.h"
-//#include "base/CommonDefines.h"
 
 class _jobject;
 
 namespace cc {
 namespace ar {
-/*
-using JniMethodInfo = struct JniMethodInfo_ {
-    JNIEnv *  env;
-    jclass    classID;
-    jmethodID methodID;
-};
-*/
+
 class ARAndroidLib : public IARAPI {
 public:
     ARAndroidLib();
@@ -46,35 +39,21 @@ public:
     void config(int featureMask) override;
     uint32_t getSupportMask() override;
     void start() override;
+    void start(void *env, void *context) override {}
     void resume() override;
+    void resume(void *env, void *context) override {}
     void pause() override;
     void update() override;
     int getAPIState() override;
-    //void beforeUpdate() override;
 
-    float* getCameraPose() override;
-    float* getCameraViewMatrix() override;
-    float* getCameraProjectionMatrix() override;
-    float* getCameraTexCoords() override;
+    Pose getCameraPose() override;
+    Matrix getCameraViewMatrix() override;
+    Matrix getCameraProjectionMatrix() override;
+    TexCoords getCameraTexCoords() override;
+    void setDisplayGeometry(uint32_t rotation, uint32_t width, uint32_t height) override {}
     void setCameraTextureName(int id) override;
-    void* getCameraTextureRef() override;
-
+    void* getCameraTextureRef() override { return nullptr; }
     uint8_t* getCameraDepthBuffer() override;
-
-    //void setPlaneFeatureEnable(bool isOn) override;
-    int getAddedPlanesCount() override;
-    int getRemovedPlanesCount() override;
-    int getUpdatedPlanesCount() override;
-
-    void enablePlane(bool enable) override;
-    void setPlaneDetectionMode(int mode) override;
-    void setPlaneMaxTrackingNumber(int count) override;
-
-    //void updatePlanesInfo() override;
-    float* getAddedPlanesInfo() override;
-    float* getRemovedPlanesInfo() override;
-    float* getUpdatedPlanesInfo() override;
-    int getInfoLength() override;
 
     int tryHitAttachAnchor(int planeIndex) override;
     float* getAnchorPose(int index) override;
@@ -84,6 +63,17 @@ public:
     int getRaycastTrackableId() override;
     int getRaycastTrackableType() override;
 
+    int getInfoLength() override { return _infoLength; }
+
+    // plane detection
+    void enablePlane(bool enable) override;
+    void setPlaneDetectionMode(int mode) override;
+    void setPlaneMaxTrackingNumber(int count) override;
+    float* getAddedPlanesInfo() override;
+    float* getUpdatedPlanesInfo() override;
+    float* getRemovedPlanesInfo() override;
+
+    // scene mesh reconstruction
     void enableSceneMesh(bool enable) override;
     float* getAddedSceneMesh() override;
     float* getUpdatedSceneMesh() override;
@@ -93,19 +83,22 @@ public:
     int* getSceneMeshTriangleIndices(int meshRef) override;
     void endRequireSceneMesh() override;
 
+    // image recognition & tracking
     void enableImageTracking(bool enable) override;
     void addImageToLib(const std::string& imageName) override;
-    void setMaxTrackingNumber(int number) override;
+    void setImageMaxTrackingNumber(int number) override;
     float* getAddedImagesInfo() override;
     float* getUpdatedImagesInfo() override;
     float* getRemovedImagesInfo() override;
 
+    // object recognition & tracking
     void enableObjectTracking(bool enable) override;
     void addObjectToLib(const std::string& imageName) override;
     float* getAddedObjectsInfo() override;
     float* getUpdatedObjectsInfo() override;
     float* getRemovedObjectsInfo() override;
 
+    // face detection & tracking
     void enableFaceTracking(bool enable) override;
     float* getAddedFacesInfo() override;
     float* getUpdatedFacesInfo() override;
@@ -114,22 +107,20 @@ public:
 
 protected:
     _jobject* _impl;
-    Pose* _cameraPose = new Pose();
-    Matrix* _viewMatrix = new Matrix();
-    Matrix* _projMatrix = new Matrix();
-    TexCoords *_cameraTexCoords = new TexCoords();
+    Pose _cameraPose;
+    Matrix _viewMatrix;
+    Matrix _projMatrix;
+    TexCoords _cameraTexCoords;
     uint8_t* _cameraDepthBuffer{nullptr};
-    //void onBeforeUpdate();
-
-    //float* _addedPlanesInfo = new float[60];
-    float* _addedPlanesInfo = nullptr;
-    float* _removedPlanesInfo = nullptr;
-    //'float* _updatedPlanesInfo = new float[60];
-    float* _updatedPlanesInfo = nullptr;
-    int _infoLength = 0;
 
     float* _hitPose = new float[7];
     float* _anchorPose = new float[7];
+
+    int _infoLength = 0;
+
+    float* _addedPlanesInfo = nullptr;
+    float* _updatedPlanesInfo = nullptr;
+    float* _removedPlanesInfo = nullptr;
 
     float* _sceneMeshVertices{nullptr};
     int* _sceneMeshIndices{nullptr};

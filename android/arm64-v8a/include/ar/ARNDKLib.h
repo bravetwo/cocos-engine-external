@@ -25,9 +25,7 @@
 
 #pragma once
 
-//#include <memory>
 #include "ar/IARAPI.h"
-//#include "ar-base/CocosARFeature.h"
 
 namespace cc {
 namespace ar {
@@ -41,10 +39,9 @@ public:
     void config(int featureMask) override;
     uint32_t getSupportMask() override;
     void start() override;
-    void start(void *context) override;
     void start(void *env, void *context) override;
     void resume() override;
-    void resume(void *context) override;
+    void resume(void *env, void *context) override;
     void pause() override;
     void update() override;
     int getAPIState() override;
@@ -58,8 +55,6 @@ public:
     void* getCameraTextureRef() override;
     uint8_t* getCameraDepthBuffer() override;
 
-    int getInfoLength() override;
-
     int tryHitAttachAnchor(int planeIndex) override;
     float* getAnchorPose(int index) override;
 
@@ -68,6 +63,9 @@ public:
     int getRaycastTrackableId() override;
     int getRaycastTrackableType() override;
 
+    int getInfoLength() override;
+
+    // plane detection
     void enablePlane(bool enable) override;
     void setPlaneDetectionMode(int mode) override;
     void setPlaneMaxTrackingNumber(int count) override;
@@ -75,6 +73,7 @@ public:
     float* getUpdatedPlanesInfo() override;
     float* getRemovedPlanesInfo() override;
 
+    // scene mesh reconstruction
     void enableSceneMesh(bool enable) override;
     float* getAddedSceneMesh() override;
     float* getUpdatedSceneMesh() override;
@@ -84,6 +83,7 @@ public:
     int* getSceneMeshTriangleIndices(int meshRef) override;
     void endRequireSceneMesh() override;
 
+    // image recognition & tracking
     void enableImageTracking(bool enable) override;
     void addImageToLib(const std::string& imageName) override;
     void setImageMaxTrackingNumber(int number) override;
@@ -91,17 +91,20 @@ public:
     float* getUpdatedImagesInfo() override;
     float* getRemovedImagesInfo() override;
 
+    // object recognition & tracking
     void enableObjectTracking(bool enable) override;
     void addObjectToLib(const std::string& imageName) override;
     float* getAddedObjectsInfo() override;
     float* getUpdatedObjectsInfo() override;
     float* getRemovedObjectsInfo() override;
 
+    // face detection & tracking
     void enableFaceTracking(bool enable) override;
     float* getAddedFacesInfo() override;
     float* getUpdatedFacesInfo() override;
     float* getRemovedFacesInfo() override;
     float* getFaceBlendShapesOf(int faceRef) override;
+
 protected:
     CocosARAndroidImpl* _impl;
 };
