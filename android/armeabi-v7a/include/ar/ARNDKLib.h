@@ -49,10 +49,11 @@ public:
     void update() override;
     int getAPIState() override;
 
-    float* getCameraPose() override;
-    float* getCameraViewMatrix() override;
-    float* getCameraProjectionMatrix() override;
-    float* getCameraTexCoords() override;
+    Pose getCameraPose() override;
+    Matrix getCameraViewMatrix() override;
+    Matrix getCameraProjectionMatrix() override;
+    TexCoords getCameraTexCoords() override;
+    void setDisplayGeometry(uint32_t rotation, uint32_t width, uint32_t height) override;
     void setCameraTextureName(int id) override;
     void* getCameraTextureRef() override;
     uint8_t* getCameraDepthBuffer() override;
@@ -73,9 +74,6 @@ public:
     float* getAddedPlanesInfo() override;
     float* getUpdatedPlanesInfo() override;
     float* getRemovedPlanesInfo() override;
-    int getAddedPlanesCount() override;
-    int getRemovedPlanesCount() override;
-    int getUpdatedPlanesCount() override;
 
     void enableSceneMesh(bool enable) override;
     float* getAddedSceneMesh() override;
@@ -88,7 +86,7 @@ public:
 
     void enableImageTracking(bool enable) override;
     void addImageToLib(const std::string& imageName) override;
-    void setMaxTrackingNumber(int number) override;
+    void setImageMaxTrackingNumber(int number) override;
     float* getAddedImagesInfo() override;
     float* getUpdatedImagesInfo() override;
     float* getRemovedImagesInfo() override;

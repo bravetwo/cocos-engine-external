@@ -148,13 +148,11 @@ if(USE_AR_MODULE)
     add_library(libARCore SHARED IMPORTED GLOBAL)
     set_target_properties(libARCore PROPERTIES
       IMPORTED_LOCATION ${platform_spec_path}/ar/libarcore_sdk_c.so
-      #INTERFACE_INCLUDE_DIRECTORIES ${platform_spec_path}/include/ar
     )
     set(AREngine libAREngine)
     add_library(libAREngine SHARED IMPORTED GLOBAL)
     set_target_properties(libAREngine PROPERTIES
       IMPORTED_LOCATION ${platform_spec_path}/ar/libhuawei_arengine_ndk.so
-      #INTERFACE_INCLUDE_DIRECTORIES ${platform_spec_path}/include/ar
     )
   #endif()
 else()
