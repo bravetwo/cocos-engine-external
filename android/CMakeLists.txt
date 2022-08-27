@@ -71,7 +71,7 @@ if(USE_XR)
   else()
     add_library(xr STATIC IMPORTED GLOBAL)
     set_target_properties(xr PROPERTIES
-      IMPORTED_LOCATION ${platform_spec_path}/xr/${XR_OEM_FOLDER}/libxr.a
+      IMPORTED_LOCATION ${platform_spec_path}/xr/${XR_FOLDER}/libxr.a
       INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/../sources/xr
     )
 
