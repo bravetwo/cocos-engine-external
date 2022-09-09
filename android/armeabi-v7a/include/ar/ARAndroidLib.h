@@ -50,7 +50,7 @@ public:
     Matrix getCameraViewMatrix() override;
     Matrix getCameraProjectionMatrix() override;
     TexCoords getCameraTexCoords() override;
-    void setDisplayGeometry(uint32_t rotation, uint32_t width, uint32_t height) override {}
+    void setDisplayGeometry(uint32_t rotation, uint32_t width, uint32_t height) override;
     void setCameraTextureName(int id) override;
     void* getCameraTextureRef() override { return nullptr; }
     uint8_t* getCameraDepthBuffer() override;

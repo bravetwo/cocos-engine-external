@@ -72,6 +72,7 @@ public:
     float* getAddedPlanesInfo() override;
     float* getUpdatedPlanesInfo() override;
     float* getRemovedPlanesInfo() override;
+    std::vector<ARPlane> getAdded() override;
 
     // scene mesh reconstruction
     void enableSceneMesh(bool enable) override;
