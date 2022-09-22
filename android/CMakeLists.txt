@@ -160,6 +160,31 @@ else()
   set(PhysXSDK)
 endif()
 
+if(USE_AR_MODULE)
+  set(CocosAR libCocosAR)
+  add_library(libCocosAR STATIC IMPORTED GLOBAL)
+  set_target_properties(libCocosAR PROPERTIES
+    IMPORTED_LOCATION ${platform_spec_path}/ar/libCocosARAndroid.a
+    INTERFACE_INCLUDE_DIRECTORIES ${platform_spec_path}/include/ar
+  )
+  #if(USE_AR_NDK)
+    set(ARCore libARCore)
+    add_library(libARCore SHARED IMPORTED GLOBAL)
+    set_target_properties(libARCore PROPERTIES
+      IMPORTED_LOCATION ${platform_spec_path}/ar/libarcore_sdk_c.so
+    )
+    set(AREngine libAREngine)
+    add_library(libAREngine SHARED IMPORTED GLOBAL)
+    set_target_properties(libAREngine PROPERTIES
+      IMPORTED_LOCATION ${platform_spec_path}/ar/libhuawei_arengine_ndk.so
+    )
+  #endif()
+else()
+  set(CocosAR)
+  set(ARCore)
+  set(AREngine)
+endif()
+
 if (USE_DEBUG_RENDERER)
 list(APPEND CC_EXTERNAL_LIBS
     freetype
@@ -173,6 +198,9 @@ list(APPEND CC_EXTERNAL_LIBS
     uv
     android_platform
     ${PhysXSDK}
+    ${CocosAR}
+    ${ARCore}
+    ${AREngine}
 )
 
 if(USE_JOB_SYSTEM_TBB OR CC_USE_VULKAN) ## VKDevice.cpp use tbb_allocator.h
